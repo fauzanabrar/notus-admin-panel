@@ -17,8 +17,8 @@ export default function LoginViews() {
             <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-blueGray-200 border-0 py-6">
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div className="text-center mb-12">
-                  <img alt="alfazza logo" src="https://alfazzakreditsyariah.com/assets/landingpageassets/img/brand.png" />
-                  <div className="font-bold">Alfazza Cloud System</div>
+                  <img alt="unhas logo" src="https://www.unhas.ac.id/wp-content/uploads/2022/09/Logo-Resmi-Unhas-1.png" />
+                  <div className="font-bold">Admin Panel FTUH</div>
                 </div>
                 <form>
                   <div className="relative w-full mb-3">
