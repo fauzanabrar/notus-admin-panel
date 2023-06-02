@@ -1,0 +1,10 @@
+.Admin__container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+}
+.Admin__childrenContainer {
+    height: 100vh;
+    overflow: scroll;
+}
