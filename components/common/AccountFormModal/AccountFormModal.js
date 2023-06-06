@@ -12,7 +12,7 @@ const MOCK_DATA_OPTIONS = [
 
 const AccountFormModal = ({ isOpen, onClose, data = {} }) => {
   const [formValues, setFormValues] = useState({ ...data, ...DEFAULT_ACCOUNT_DATA });
-
+  console.log('iam rerenderd');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ const AccountFormModal = ({ isOpen, onClose, data = {} }) => {
   };
 
   return (
-    <Modals isOpen={isOpen} size="medium" onClose={onClose} title="Schedule Form">
+    <Modals isOpen={isOpen} size="medium" onClose={onClose} title="Account Schedule Form">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="nip" className="block font-medium">

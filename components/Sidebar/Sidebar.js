@@ -11,56 +11,61 @@ const SIDEBAR_MENU = [
     value: 'dashboard',
     // link: 'admin/dashboard',
   },
+  // {
+  //   label: 'Sales',
+  //   value: 'sales',
+  //   // link: 'admin/sales',
+  // },
   {
-    label: 'Sales',
-    value: 'sales',
-    // link: 'admin/sales',
+    label: 'Blogs',
+    value: 'blogs',
+    // link: 'admin/blogs',
   },
-  {
-    label: 'Customer',
-    value: 'customer',
-    // link: 'admin/customer',
-  },
-  {
-    label: 'Purchase',
-    value: 'purchase',
-    // link: 'admin/purchase',
-  },
-  {
-    label: 'Inventory',
-    value: 'inventory',
-    // link: 'admin/inventory',
-  },
-  {
-    label: 'Receipts',
-    value: 'receipts',
-    // link: 'admin/receipts',
-  },
-  {
-    label: 'Expense',
-    value: 'expense',
-    // link: 'admin/expense',
-  },
-  {
-    label: 'Assets',
-    value: 'assets',
-    // link: 'admin/assets',
-  },
-  {
-    label: 'Investor',
-    value: 'Investor',
-    // link: 'admin/Investor',
-  },
-  {
-    label: 'Report',
-    value: 'report',
-    // link: 'admin/report',
-  },
-  {
-    label: 'Calendar',
-    value: 'calendar',
-    // link: 'admin/calendar',
-  },
+  // {
+  //   label: 'Customer',
+  //   value: 'customer',
+  //   // link: 'admin/customer',
+  // },
+  // {
+  //   label: 'Purchase',
+  //   value: 'purchase',
+  //   // link: 'admin/purchase',
+  // },
+  // {
+  //   label: 'Inventory',
+  //   value: 'inventory',
+  //   // link: 'admin/inventory',
+  // },
+  // {
+  //   label: 'Receipts',
+  //   value: 'receipts',
+  //   // link: 'admin/receipts',
+  // },
+  // {
+  //   label: 'Expense',
+  //   value: 'expense',
+  //   // link: 'admin/expense',
+  // },
+  // {
+  //   label: 'Assets',
+  //   value: 'assets',
+  //   // link: 'admin/assets',
+  // },
+  // {
+  //   label: 'Investor',
+  //   value: 'Investor',
+  //   // link: 'admin/Investor',
+  // },
+  // {
+  //   label: 'Report',
+  //   value: 'report',
+  //   // link: 'admin/report',
+  // },
+  // {
+  //   label: 'Calendar',
+  //   value: 'calendar',
+  //   // link: 'admin/calendar',
+  // },
 ]
 
 export default function Sidebar() {
@@ -159,78 +164,6 @@ export default function Sidebar() {
                   </li>
                 )
               })}
-{/* 
-              <li className="items-center">
-                <Link href="/admin/sales">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/sales") !== -1
-                        ? "text-emerald-500 hover:text-emerald-600"
-                        : "text-emerald-700 hover:text-emerald-500")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-table mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/sales") !== -1
-                          ? "opacity-75"
-                          : "text-emerald-300")
-                      }
-                    ></i>{" "}
-                    Sales
-                  </a>
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/customer">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/customer") !== -1
-                        ? "text-emerald-500 hover:text-emerald-600"
-                        : "text-emerald-700 hover:text-emerald-500")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-table mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/customer") !== -1
-                          ? "opacity-75"
-                          : "text-emerald-300")
-                      }
-                    ></i>{" "}
-                    Customer
-                  </a>
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/customer">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/customer") !== -1
-                        ? "text-emerald-500 hover:text-emerald-600"
-                        : "text-emerald-700 hover:text-emerald-500")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-table mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/customer") !== -1
-                          ? "opacity-75"
-                          : "text-emerald-300")
-                      }
-                    ></i>{" "}
-                    Customer
-                  </a>
-                </Link>
-              </li> */}
             </ul>
           </div>
         </div>

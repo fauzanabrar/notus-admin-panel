@@ -15,8 +15,8 @@ const Pagination = ({ totalPages, activePage, onNextClick, onPreviousClick, onCl
         pages.push(
           <button
             key={i}
-            className={`px-2 py-1 ${
-              activePage === i ? "bg-blue-500 text-blueGray-800" : "text-blueGray-500"
+            className={`px-3 py-2 ${
+              activePage === i ? "bg-blueGray-700 rounded text-white" : "text-blueGray-500"
             }`}
             onClick={() => handlePageClick(i)}
           >
