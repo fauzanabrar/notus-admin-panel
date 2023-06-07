@@ -12,7 +12,6 @@ const MOCK_DATA_OPTIONS = [
 
 const AccountFormModal = ({ isOpen, onClose, data = {} }) => {
   const [formValues, setFormValues] = useState({ ...data, ...DEFAULT_ACCOUNT_DATA });
-  console.log('iam rerenderd');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {

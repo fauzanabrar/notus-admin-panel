@@ -20,7 +20,7 @@ export default function FooterAdmin() {
             </div>
             <div className="w-full md:w-8/12 px-4">
               <ul className="flex flex-wrap list-none md:justify-end  justify-center">
-                <li>
+                <li  key={"team"}>
                   <a
                     href="https://www.creative-tim.com?ref=nnjs-footer-admin"
                     className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
@@ -28,7 +28,7 @@ export default function FooterAdmin() {
                     Creative Tim
                   </a>
                 </li>
-                <li>
+                <li  key={"about"}>
                   <a
                     href="https://www.creative-tim.com/presentation?ref=nnjs-footer-admin"
                     className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
@@ -36,7 +36,7 @@ export default function FooterAdmin() {
                     About Us
                   </a>
                 </li>
-                <li>
+                <li key={"blog"}>
                   <a
                     href="http://blog.creative-tim.com?ref=nnjs-footer-admin"
                     className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
@@ -44,7 +44,7 @@ export default function FooterAdmin() {
                     Blog
                   </a>
                 </li>
-                <li>
+                <li key={"license"}>
                   <a
                     href="https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md?ref=nnjs-footer-admin"
                     className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"

@@ -139,8 +139,8 @@ export default function Sidebar() {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               {SIDEBAR_MENU.map(menu => {
                 return (
-                  <li className="items-center">
-                    <Link href={menu.value}>
+                  <li key={menu.value} className="items-center">
+                    <Link href={"/admin/"+menu.value}>
                       <a
                         href="#pablo"
                         className={

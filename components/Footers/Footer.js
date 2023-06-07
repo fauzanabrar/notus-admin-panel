@@ -64,7 +64,7 @@ export default function Footer() {
                     Useful Links
                   </span>
                   <ul className="list-unstyled">
-                    <li>
+                    <li key={"about"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://www.creative-tim.com/presentation?ref=nnjs-footer"
@@ -72,7 +72,7 @@ export default function Footer() {
                         About Us
                       </a>
                     </li>
-                    <li>
+                    <li key={"Blog"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://blog.creative-tim.com?ref=nnjs-footer"
@@ -80,7 +80,7 @@ export default function Footer() {
                         Blog
                       </a>
                     </li>
-                    <li>
+                    <li key={"git"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://www.github.com/creativetimofficial?ref=nnjs-footer"
@@ -88,7 +88,7 @@ export default function Footer() {
                         Github
                       </a>
                     </li>
-                    <li>
+                    <li key={"free"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://www.creative-tim.com/bootstrap-themes/free?ref=nnjs-footer"
@@ -103,7 +103,7 @@ export default function Footer() {
                     Other Resources
                   </span>
                   <ul className="list-unstyled">
-                    <li>
+                    <li key={"mit"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md?ref=nnjs-footer"
@@ -111,7 +111,7 @@ export default function Footer() {
                         MIT License
                       </a>
                     </li>
-                    <li>
+                    <li key={"tnc"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/terms?ref=nnjs-footer"
@@ -119,7 +119,7 @@ export default function Footer() {
                         Terms & Conditions
                       </a>
                     </li>
-                    <li>
+                    <li key={"policy"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/privacy?ref=nnjs-footer"
@@ -127,7 +127,7 @@ export default function Footer() {
                         Privacy Policy
                       </a>
                     </li>
-                    <li>
+                    <li key={"contact"}>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/contact-us?ref=nnjs-footer"

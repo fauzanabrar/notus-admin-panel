@@ -4,7 +4,7 @@ const Add = ({handleAdd= () => {}}) => {
   return (
     <>
       <button
-        className="w-24 bg-blue-400 text-white mx-4 active:bg-blue-600 text-xs font-bold uppercase py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="w-24 bg-blue-400 text-white active:bg-blue-600 text-xs font-bold uppercase py-2 rounded-md outline-none focus:outline-none  ease-linear transition-all duration-150"
         type="button"
         onClick={handleAdd}
       >

@@ -16,7 +16,7 @@ const Pagination = ({ totalPages, activePage, onNextClick, onPreviousClick, onCl
           <button
             key={i}
             className={`px-3 py-2 ${
-              activePage === i ? "bg-blueGray-700 rounded text-white" : "text-blueGray-500"
+              activePage === i ? "bg-blueGray-700 rounded text-white" : "bg-white rounded text-blueGray-500"
             }`}
             onClick={() => handlePageClick(i)}
           >
@@ -31,7 +31,7 @@ const Pagination = ({ totalPages, activePage, onNextClick, onPreviousClick, onCl
             <button
               key={i}
               className={`px-2 py-1 ${
-                activePage === i ? "bg-blue-500 text-blueGray-800" : "text-blueGray-500"
+                activePage === i ? "bg-blueGray-700 rounded text-white" : "bg-white rounded text-blueGray-500"
               }`}
               onClick={() => handlePageClick(i)}
             >
@@ -126,7 +126,7 @@ const Pagination = ({ totalPages, activePage, onNextClick, onPreviousClick, onCl
       <button
         className="px-2 py-1 text-blueGray-800"
         onClick={onPreviousClick}
-        disabled={activePage === 1}
+        hidden={activePage === 1}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/>
@@ -137,6 +137,7 @@ const Pagination = ({ totalPages, activePage, onNextClick, onPreviousClick, onCl
         className="px-2 py-1 text-blueGray-800"
         onClick={onNextClick}
         disabled={activePage === totalPages}
+        hidden={activePage === totalPages}
     >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" fill="currentColor"/>
