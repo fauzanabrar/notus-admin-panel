@@ -10,13 +10,14 @@ const MOCK_SUGGESSTIONS = [
   "Laravel",
 ];
 
-const TagInput = ({ name, title, defaultTags = [] }) => {
+const TagInput = ({ name, title, defaultTags = [], handleChange }) => {
   const [tags, setTags] = useState(defaultTags);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState(MOCK_SUGGESSTIONS);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
+    handleChange(name, tags);
   };
 
   const handleKeyDown = (event) => {
@@ -25,6 +26,7 @@ const TagInput = ({ name, title, defaultTags = [] }) => {
       const newTag = inputValue.trim();
       if (!tags.includes(newTag)) {
         setTags([...tags, newTag]);
+        handleChange(name, [...tags, newTag]);
       }
       setInputValue("");
     }
@@ -38,6 +40,7 @@ const TagInput = ({ name, title, defaultTags = [] }) => {
   const handleSuggestionClick = (suggestion) => {
     if (!tags.includes(suggestion)) {
       setTags([...tags, suggestion]);
+      handleChange(name, [...tags, suggestion]); 
     }
     setInputValue("");
   };

@@ -47,7 +47,6 @@ export default function DetailViews({ id }) {
               return <p className="my-3">{value}</p>;
             })}
           </div>
-          {console.log(data.isi)}
         </div>
       </div>
     </>

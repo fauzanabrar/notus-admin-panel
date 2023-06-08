@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CKeditor from "./CKeditor.js";
 
 
-export default function Editor({title, name, data = ""}) {
+export default function Editor({title, name, data = "", handleChange}) {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [text, setText] = useState(data);
 
@@ -10,6 +10,12 @@ export default function Editor({title, name, data = ""}) {
     setEditorLoaded(true);
   }, []);
     
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    handleChange(name, value);
+  };
+
   return (
     <div>
       <label htmlFor={name} className="block font-medium mb-1">
@@ -19,6 +25,7 @@ export default function Editor({title, name, data = ""}) {
         name={name}
         onChange={(data) => {
           setText(data);
+          handleInputChange({target: {name, value: data}});
         }}
         editorLoaded={editorLoaded}
         value={text}

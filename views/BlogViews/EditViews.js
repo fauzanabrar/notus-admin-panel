@@ -33,19 +33,11 @@ export default function EditViews({
     setSelectedFile(file);
   };
 
-  const handleUpload = () => {
-    console.log(selectedFile);
-  };
 
   const handleGoBack = () => {
     router.back();
   };
 
-  const handleDropdown = (e) => {
-    const { name, value, label } = e.target;
-    console.log("here", { name, label, value });
-    setSelectedOption("changed");
-  };
 
   return (
     <>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const ImageUploader = ({ name, title, onFileChange }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    onFileChange(file);
+    onFileChange(file, name);
   };
 
   return (

@@ -12,8 +12,9 @@ export default function MyTable({
   titleTable,
   tbody,
   handleDetails = () => {},
-  handleEdit = () => { },
+  handleEdit = () => {},
   handleDelete = () => { },
+  handleAdd = () => { },
 }) {
   const router = useRouter();
 
@@ -23,46 +24,42 @@ export default function MyTable({
   const [activePage, setActivePage] = useState(1);
   const [tableData, setTableData] = useState(tbody);
 
+
   const paginationRef = useRef();
 
   const itemsPerPage = 4;
 
   useEffect(() => {
     if (paginationRef.current) {
-      paginationRef.current.scrollIntoView({ behavior: 'smooth' });
+      paginationRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [activePage]);
 
   const handlePageChange = (page) => {
     setActivePage(page);
-    paginationRef.current.scrollIntoView({ behavior: 'smooth' });
+    paginationRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const onNextClick = () => {
     setActivePage((prevPage) => prevPage + 1);
-    paginationRef.current.scrollIntoView({ behavior: 'smooth' });
+    paginationRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const onPreviousClick = () => {
     setActivePage((prevPage) => prevPage - 1);
-    paginationRef.current.scrollIntoView({ behavior: 'smooth' });
+    paginationRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const onDelete = (id) => {
     setIsModalOpen(true);
     setselectedItem(id);
-    handleDelete(id);
-  };
-
-  const handleAdd = () => {
-    router.push("/blogs/add");
   };
 
   const handleSearch = (e) => {
     const searchInput = e.target.value;
     if (searchInput === "") {
       setTableData(tbody);
-      return
+      return;
     }
     setSearchValue(searchInput);
 
@@ -76,7 +73,6 @@ export default function MyTable({
     // Mengatur halaman saat ini kembali ke halaman pertama setelah pencarian
     setActivePage(1);
   };
-
 
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -93,6 +89,7 @@ export default function MyTable({
               (data) => data.id !== selectedItem
             );
             setTableData(updatedTbody);
+            handleDelete(selectedItem);
           }}
         />
       )}
@@ -120,7 +117,7 @@ export default function MyTable({
             ref={null}
           />
         </div>
-        <div className="block w-full overflow-x-auto flex-1" >
+        <div className="block w-full overflow-x-auto flex-1">
           <table className="items-center w-full bg-transparent border-collapse table-fixed">
             <thead className="sticky top--1">
               <tr>
@@ -234,8 +231,7 @@ export default function MyTable({
                             className="w-full bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
                             onClick={() => {
-                              onDelete(data.id)
-                              
+                              onDelete(data.id);
                             }}
                           >
                             Delete
@@ -258,7 +254,10 @@ export default function MyTable({
             </tbody>
           </table>
         </div>
-        <div className="flex flex-row w-full overflow-x-auto justify-center p-4 bg-blueGray-200" ref={paginationRef}>
+        <div
+          className="flex flex-row w-full overflow-x-auto justify-center p-4 bg-blueGray-200"
+          ref={paginationRef}
+        >
           <Pagination
             activePage={activePage}
             totalPages={Math.ceil(tableData.length / itemsPerPage)}

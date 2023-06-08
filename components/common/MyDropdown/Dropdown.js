@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = ({ name, options, selectDefault }) => {
+const Dropdown = ({ name, options, selectDefault, handleChange }) => {
   const optionDefault = options.find(
     (option) => option.label === selectDefault
   );
@@ -11,6 +11,9 @@ const Dropdown = ({ name, options, selectDefault }) => {
 
   const handleDropdownChange = (e) => {
     setSelectedOption(e.target.value);
+    handleChange(name, options.find(
+      (option) => option.value === e.target.value
+    ).label);
   };
 
   return (

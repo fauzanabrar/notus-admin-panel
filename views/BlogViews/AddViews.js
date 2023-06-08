@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import Editor from "components/common/Forms/Editor";
@@ -7,27 +7,28 @@ import Dropdown from "components/common/MyDropdown/Dropdown";
 import ImageUploader from "components/common/Forms/ImageUpload";
 import ImagePreview from "components/common/Forms/ImagePreview";
 import TagInput from "components/common/Forms/TagInput";
+import BlogContext from "context/BlogContext";
 
 const MOCK_DATA_OPTIONS = [
   { id: 1, label: "Publikasikan", value: "1" },
   { id: 2, label: "Simpan Sebagai Draft", value: "2" },
 ];
 
-export default function AddViews({
-  isOpen,
-  onClose,
-  data = {},
-}) {
+export default function AddViews({ data= {}, onSubmit}) {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const { data: hehe, updateData } = useContext(BlogContext);
+  console.log(hehe, 'ini di add views');
+
 
   const [formData, setFormData] = useState({});
 
-  const handleFileChange = (file) => {
+  const handleFileChange = (file, name) => {
     setSelectedFile(file);
+    setFormData((prev) => ({ ...prev, [name]: URL.createObjectURL(file) }));
   };
 
   const handleGoBack = () => {
@@ -37,6 +38,7 @@ export default function AddViews({
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    onSubmit(formData);
   };
 
   const handleChange = (name, value) => {
@@ -56,7 +58,7 @@ export default function AddViews({
           <form onSubmit={handleSubmit} className="space-y-4">
             <TextInput
               handleChange={handleChange}
-              name="title-indonesia"
+              name="judul"
               title="Judul Berita (Bahasa Indonesia)"
             />
             <TextInput
@@ -65,23 +67,28 @@ export default function AddViews({
               title="Judul Berita (English)"
             />
             <div>
-              <TagInput name="kategori" title="Kategori" />
+              <TagInput name="kategori" title="Kategori" handleChange={handleChange} />
             </div>
             <Editor
               title="Isi Berita (Bahasa Indonesia)"
-              name="body-indonesia"
+              name="isi"
+              handleChange={handleChange}
             />
-            <Editor title="Isi Berita (English)" name="body-english" />
+            <Editor
+              title="Isi Berita (English)"
+              name="body-english"
+              handleChange={handleChange}
+            />
 
             <div>
-              <label htmlFor="status" className="block font-medium">
+              <label htmlFor="statusPublikasi" className="block font-medium">
                 Status Publikasi
               </label>
-              <Dropdown name="status" options={MOCK_DATA_OPTIONS} />
+              <Dropdown name="statusPublikasi" options={MOCK_DATA_OPTIONS} handleChange={handleChange} />
             </div>
             <ImageUploader
               title="Upload Gambar"
-              name="image"
+              name="gambar"
               onFileChange={handleFileChange}
             />
             <ImagePreview
