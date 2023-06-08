@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Admin from "layouts/Admin.js";
 import { MyTable } from "components/common/MyTable";
 import { useRouter } from "next/router";
@@ -7,17 +7,24 @@ import BlogContext from "context/BlogContext";
 const BlogViews = () => {
   const router = useRouter();
 
-  const [tableData, setTableData] = useState(BLOG_TBODY_MOCK);
   const context = useContext(BlogContext);
+  const tbl = context.data;
+  const [tableData, setTableData] = useState(tbl);
+  console.log(context.data, 'context blogviews');
+  console.log(tableData, 'tableData blogviews');
 
-  console.log(context.data, 'blogviews');
 
   const handleDelete = (id) => {
-    BLOG_TBODY_MOCK = BLOG_TBODY_MOCK.filter((data) => data.id !== id);
-    setTableData(BLOG_TBODY_MOCK);
+    // BLOG_TBODY_MOCK = BLOG_TBODY_MOCK.filter((data) => data.id !== id);
+    // setTableData(BLOG_TBODY_MOCK);
     const newData = context.data.filter((item) => item.id !== id);
     context.updateData(newData);
+    setTableData(context.data);
   };
+
+  useEffect(() => {
+    setTableData(context.data);
+  }, [context.data]);
 
   return (
     <>

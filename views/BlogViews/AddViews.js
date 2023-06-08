@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import Editor from "components/common/Forms/Editor";
@@ -14,7 +14,7 @@ const MOCK_DATA_OPTIONS = [
   { id: 2, label: "Simpan Sebagai Draft", value: "2" },
 ];
 
-export default function AddViews({ data= {}, onSubmit}) {
+export default function AddViews({ data= {}}) {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +25,16 @@ export default function AddViews({ data= {}, onSubmit}) {
 
 
   const [formData, setFormData] = useState({});
+
+
+  useEffect(() => {
+    if (!formData.id) {
+      setFormData({ ...formData, id: context.data.length + 1 })
+    }
+    if (!formData.statusPublikasi) {
+      setFormData({ ...formData, statusPublikasi: "Publikasikan" })
+    }
+  }, []);
 
   const handleFileChange = (file, name) => {
     setSelectedFile(file);
@@ -37,8 +47,9 @@ export default function AddViews({ data= {}, onSubmit}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     console.log(formData);
-    onSubmit(formData);
+    context.updateData([...context.data, formData]);
   };
 
   const handleChange = (name, value) => {

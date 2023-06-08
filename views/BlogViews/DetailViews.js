@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
-import { BLOG_TBODY_MOCK } from "utils/mock-data";
+import BlogContext from "context/BlogContext";
 
 export default function DetailViews({ id }) {
   const [isLoading, setIsLoading] = useState(false);
+  
   const router = useRouter();
-  const data = BLOG_TBODY_MOCK.find((item) => item.id === Number(id));
+  
+  const context = useContext(BlogContext);
 
+  const [data, setData] = useState({});
+  
   const handleGoBack = () => {
     router.back();
   };
+  
+  useEffect(() => {
+    setData(context.data.find((item) => item.id === Number(id)));
+  }, [data]);
 
   return (
     <>
@@ -23,18 +31,18 @@ export default function DetailViews({ id }) {
         </div>
         <div className="p-4">
           <h1 className="font-bold text-2xl inline leading-snug">
-            {data.judul} 
+            {data?.judul} 
           </h1>
-          {data.statusPublikasi === "Published" ? (
-            <span className="bg-green-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider">{data.statusPublikasi}</span>
+          {data?.statusPublikasi === "Published" ? (
+            <span className="bg-green-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider">{data?.statusPublikasi}</span>
           ): (
             <span className="bg-blue-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider ">{"Draft"}</span>
           )}
           <p className="text-gray-400 my-2 ">
-            Author {data.penulis} published at {data.publishDate}
+            Author {data?.penulis} published at {data?.publishDate}
           </p>
-          {data.gambar ? (
-            <img src={data.gambar} alt={data.judul} className="mx-auto my-6 border border-gray-300" />
+          {data?.gambar ? (
+            <img src={data?.gambar} alt={data?.judul} className="mx-auto my-6 border border-gray-300" />
           ) : (
             <img
               src="/img/image-error.png"
@@ -43,7 +51,7 @@ export default function DetailViews({ id }) {
             />
           )}
           <div className="">
-            {data.isi.split("\n").map((value) => {
+            {data?.isi?.split("\n").map((value) => {
               return <p className="my-3">{value}</p>;
             })}
           </div>

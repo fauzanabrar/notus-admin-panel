@@ -13,8 +13,8 @@ export default function MyTable({
   tbody,
   handleDetails = () => {},
   handleEdit = () => {},
-  handleDelete = () => { },
-  handleAdd = () => { },
+  handleDelete = () => {},
+  handleAdd = () => {},
 }) {
   const router = useRouter();
 
@@ -24,10 +24,13 @@ export default function MyTable({
   const [activePage, setActivePage] = useState(1);
   const [tableData, setTableData] = useState(tbody);
 
-
   const paginationRef = useRef();
 
   const itemsPerPage = 4;
+
+  useEffect(() => {
+    setTableData(tbody);
+  }, [tbody]);
 
   useEffect(() => {
     if (paginationRef.current) {

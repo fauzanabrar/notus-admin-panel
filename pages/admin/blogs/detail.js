@@ -3,6 +3,7 @@ import React  from "react";
 import Admin from "layouts/Admin.js";
 import DetailViews from "views/BlogViews/DetailViews";
 import { useRouter } from "next/router";
+import { BlogProvider } from "context/BlogContext";
 
 export default function DetailBlog() {
   const router = useRouter();
@@ -10,7 +11,9 @@ export default function DetailBlog() {
   
   return (
     <>
-      <DetailViews id={id} />
+      <BlogProvider>
+        <DetailViews id={id} />
+      </BlogProvider>
     </>
   );
 }
