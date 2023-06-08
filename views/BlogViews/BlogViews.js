@@ -8,15 +8,15 @@ const BlogViews = () => {
   const router = useRouter();
 
   const [tableData, setTableData] = useState(BLOG_TBODY_MOCK);
-  const { data, updateData } = useContext(BlogContext);
+  const context = useContext(BlogContext);
 
-  console.log(data, 'ini context lah');
+  console.log(context.data, 'blogviews');
 
   const handleDelete = (id) => {
     BLOG_TBODY_MOCK = BLOG_TBODY_MOCK.filter((data) => data.id !== id);
     setTableData(BLOG_TBODY_MOCK);
-    const newData = data.filter((item) => item.id !== id);
-    updateData(newData);
+    const newData = context.data.filter((item) => item.id !== id);
+    context.updateData(newData);
   };
 
   return (
@@ -24,9 +24,9 @@ const BlogViews = () => {
       <MyTable
         titleTable="Blogs Table"
         tbody={tableData}
-        handleDetails={(data) => router.push(`/blogs/detail?id=${data}`)}
-        handleEdit={(data) => router.push(`/blogs/edit?id=${data}`)}
-        handleAdd={() => router.push(`/blogs/add`)}
+        handleDetails={(data) => router.push(`blogs/detail?id=${data}`)}
+        handleEdit={(data) => router.push(`blogs/edit?id=${data}`)}
+        handleAdd={() => router.push(`blogs/add`)}
         handleDelete={handleDelete}
       />
     </>

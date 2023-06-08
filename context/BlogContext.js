@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const BlogContext = createContext();
 
@@ -166,12 +166,22 @@ export const BlogProvider = ({ children }) => {
     },
   ]);
 
+  // Mengambil data konteks dari penyimpanan saat komponen dimuat
+  useEffect(() => {
+    const storedData = localStorage.getItem("blogData");
+    if (storedData) {
+      setData(JSON.parse(storedData));
+    }
+  }, []);
+
+  // Mengupdate data konteks dan juga menyimpannya ke penyimpanan
   const updateData = (newData) => {
     setData(newData);
+    localStorage.setItem("blogData", JSON.stringify(newData));
   };
 
   return (
-    <BlogContext.Provider value={{ data, updateData }}>
+    <BlogContext.Provider value={ {data, updateData} }>
       {children}
     </BlogContext.Provider>
   );

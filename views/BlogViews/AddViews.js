@@ -20,8 +20,8 @@ export default function AddViews({ data= {}, onSubmit}) {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const { data: hehe, updateData } = useContext(BlogContext);
-  console.log(hehe, 'ini di add views');
+  const context = useContext(BlogContext);
+  console.log(context.data, 'addViews');
 
 
   const [formData, setFormData] = useState({});
