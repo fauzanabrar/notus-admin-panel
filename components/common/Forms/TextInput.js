@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function TextInput({ title, handleChange, placeholder = title, name, data }) {
+export default function TextInput({ title, handleChange, placeholder = title, name, data, isRequired }) {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,7 +21,7 @@ export default function TextInput({ title, handleChange, placeholder = title, na
           value={data}
           onChange={handleInputChange}
           className="w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          // required
+          required={isRequired}
         />
       </div>
     </>

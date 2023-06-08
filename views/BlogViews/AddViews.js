@@ -10,31 +10,21 @@ import TagInput from "components/common/Forms/TagInput";
 import BlogContext from "context/BlogContext";
 
 const MOCK_DATA_OPTIONS = [
-  { id: 1, label: "Publikasikan", value: "1" },
-  { id: 2, label: "Simpan Sebagai Draft", value: "2" },
+  { id: 1, label: "Publikasikan", value: "Published" },
+  { id: 2, label: "Simpan Sebagai Draft", value: "Draft" },
 ];
 
-export default function AddViews({ data= {}}) {
+export default function AddViews({ data = {} }) {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const context = useContext(BlogContext);
-  console.log(context.data, 'addViews');
-
 
   const [formData, setFormData] = useState({});
 
-
-  useEffect(() => {
-    if (!formData.id) {
-      setFormData({ ...formData, id: context.data.length + 1 })
-    }
-    if (!formData.statusPublikasi) {
-      setFormData({ ...formData, statusPublikasi: "Publikasikan" })
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   const handleFileChange = (file, name) => {
     setSelectedFile(file);
@@ -47,9 +37,29 @@ export default function AddViews({ data= {}}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log(formData);
-    context.updateData([...context.data, formData]);
+    const elements = e.target.elements;
+
+    const id = Number(elements.idData.defaultValue);
+
+    const publishDate = new Date().toLocaleDateString().replaceAll("/", "-");
+
+    const statusPublikasiElement = elements.statusPublikasi;
+    const statusPublikasi = statusPublikasiElement.value;
+
+    const penulis = elements.penulis.defaultValue;
+
+    const newData = {
+      ...formData,
+      statusPublikasi,
+      id,
+      publishDate,
+      penulis,
+    };
+
+    const updatedData = [...context.data, newData];
+    context.updateData(updatedData);
+
+    router.push("/admin/blogs");
   };
 
   const handleChange = (name, value) => {
@@ -67,10 +77,17 @@ export default function AddViews({ data= {}}) {
         </div>
         <div className="p-4">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="hidden"
+              name="idData"
+              defaultValue={context.data.length + 1}
+            />
+            <input type="hidden" name="penulis" defaultValue={"Admin"} />
             <TextInput
               handleChange={handleChange}
               name="judul"
               title="Judul Berita (Bahasa Indonesia)"
+              isRequired={true}
             />
             <TextInput
               handleChange={handleChange}
@@ -78,7 +95,11 @@ export default function AddViews({ data= {}}) {
               title="Judul Berita (English)"
             />
             <div>
-              <TagInput name="kategori" title="Kategori" handleChange={handleChange} />
+              <TagInput
+                name="kategori"
+                title="Kategori"
+                handleChange={handleChange}
+              />
             </div>
             <Editor
               title="Isi Berita (Bahasa Indonesia)"
@@ -95,7 +116,11 @@ export default function AddViews({ data= {}}) {
               <label htmlFor="statusPublikasi" className="block font-medium">
                 Status Publikasi
               </label>
-              <Dropdown name="statusPublikasi" options={MOCK_DATA_OPTIONS} handleChange={handleChange} />
+              <Dropdown
+                name="statusPublikasi"
+                options={MOCK_DATA_OPTIONS}
+                handleChange={handleChange}
+              />
             </div>
             <ImageUploader
               title="Upload Gambar"

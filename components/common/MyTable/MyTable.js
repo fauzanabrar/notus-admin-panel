@@ -6,6 +6,7 @@ import Add from "../MyActionButton/Add";
 import { Search } from "../Search";
 import Pagination from "../Pagination/Pagination";
 import { DeleteModals } from "../DeleteModals";
+import BlogContext from "context/BlogContext";
 
 export default function MyTable({
   color,
@@ -22,15 +23,16 @@ export default function MyTable({
   const [searchValue, setSearchValue] = useState("");
   const [selectedItem, setselectedItem] = useState("");
   const [activePage, setActivePage] = useState(1);
-  const [tableData, setTableData] = useState(tbody);
+  const body = tbody;
+  const [tableData, setTableData] = useState(body);
 
   const paginationRef = useRef();
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 1;
 
   useEffect(() => {
     setTableData(tbody);
-  }, [tbody]);
+  }, [BlogContext, tbody]);
 
   useEffect(() => {
     if (paginationRef.current) {
@@ -60,26 +62,31 @@ export default function MyTable({
 
   const handleSearch = (e) => {
     const searchInput = e.target.value;
-    if (searchInput === "") {
-      setTableData(tbody);
-      return;
-    }
     setSearchValue(searchInput);
+  };
 
+  useEffect(() => {
     // Mencari di seluruh tableData berdasarkan searchValue
-    const filteredData = tableData.filter((data) =>
-      data.judul.toLowerCase().includes(searchInput.toLowerCase())
+    const filteredData = tbody.filter((data) =>
+      data.judul ? data.judul.toLowerCase().includes(searchValue.toLowerCase()) : (true)
     );
 
     // Menetapkan hasil pencarian ke tableData
     setTableData(filteredData);
     // Mengatur halaman saat ini kembali ke halaman pertama setelah pencarian
     setActivePage(1);
-  };
+
+    
+    if (searchValue === "") {
+      setTableData(tbody);
+      return;
+    }
+  }, [searchValue])
+
 
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedTbody = tableData.slice(startIndex, endIndex);
+  const displayedTbody = tableData ? tableData.slice(startIndex, endIndex): [];
 
   return (
     <>
@@ -169,8 +176,8 @@ export default function MyTable({
               </tr>
             </thead>
             <tbody>
-              {displayedTbody.length > 0 ? (
-                displayedTbody.map((data, index) => {
+              {displayedTbody?.length > 0 ? (
+                displayedTbody?.map((data, index) => {
                   return (
                     <tr className="hover:bg-blueGray-300">
                       <td className="border-t-0 text-center align-middle border-l-0 border-r-0 text-xs p-4 ">
@@ -263,7 +270,7 @@ export default function MyTable({
         >
           <Pagination
             activePage={activePage}
-            totalPages={Math.ceil(tableData.length / itemsPerPage)}
+            totalPages={Math.ceil(tableData? (tableData.length / itemsPerPage): 1)}
             onClick={handlePageChange}
             onNextClick={onNextClick}
             onPreviousClick={onPreviousClick}

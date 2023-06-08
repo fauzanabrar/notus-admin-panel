@@ -33,8 +33,8 @@ export default function DetailViews({ id }) {
           <h1 className="font-bold text-2xl inline leading-snug">
             {data?.judul} 
           </h1>
-          {data?.statusPublikasi === "Published" ? (
-            <span className="bg-green-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider">{data?.statusPublikasi}</span>
+          {data?.statusPublikasi === "Publikasikan" || data?.statusPublikasi === "Published" ? (
+            <span className="bg-green-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider">{"Published"}</span>
           ): (
             <span className="bg-blue-500 font-medium text-white rounded-md px-3 py-1 text-lg mx-2 tracking-wider ">{"Draft"}</span>
           )}
@@ -51,9 +51,10 @@ export default function DetailViews({ id }) {
             />
           )}
           <div className="">
-            {data?.isi?.split("\n").map((value) => {
+            {/* {data?.isi?.split("\n").map((value) => {
               return <p className="my-3">{value}</p>;
-            })}
+            })} */}
+            <div dangerouslySetInnerHTML={{ __html: data?.isi }} />
           </div>
         </div>
       </div>

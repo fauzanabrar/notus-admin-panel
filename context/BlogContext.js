@@ -5,16 +5,12 @@ const BlogContext = createContext();
 export default BlogContext;
 
 export const BlogProvider = ({ children }) => {
-  const [data, setData] = useState([]);
   
-  console.log("aku dipanggil");
+  const [data, setData] = useState([]);
 
-  // Mengambil data konteks dari penyimpanan saat komponen dimuat
   useEffect(() => {
-    const storedData = localStorage.getItem("blogData");
-    if ( storedData && storedData.length > 3) {
-      setData(JSON.parse(storedData));
-    } else {
+    let storedData = JSON.parse(localStorage.getItem("blogData"));
+    if (!(storedData && storedData.length > 0)) {
       const newData = [
         {
           id: 1,
@@ -176,13 +172,16 @@ export const BlogProvider = ({ children }) => {
         },
       ];
       localStorage.setItem("blogData", JSON.stringify(newData));
-      setData(JSON.parse(storedData));
+      storedData = JSON.parse(localStorage.getItem("blogData"));
     }
+    setData(storedData);
   }, []);
 
+  
   // Mengupdate data konteks dan juga menyimpannya ke penyimpanan
   const updateData = (newData) => {
-    setData(newData);
+    // setData(newData);
+    console.log(newData, 'uppdate contexjt');
     localStorage.setItem("blogData", JSON.stringify(newData));
   };
 
