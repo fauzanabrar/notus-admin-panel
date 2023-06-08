@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 
 export default function TextInput({ title, handleChange, placeholder = title, name, data }) {
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    handleChange(name, value);
+  };
+
   return (
     <>
       <div>
@@ -14,7 +19,7 @@ export default function TextInput({ title, handleChange, placeholder = title, na
           id={name}
           name={name}
           value={data}
-          onChange={handleChange}
+          onChange={handleInputChange}
           className="w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
           required
         />

@@ -17,31 +17,30 @@ export default function AddViews({
   isOpen,
   onClose,
   data = {},
-  handleChange = () => {},
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [formValues, setFormValues] = useState({ ...MOCK_DATA_OPTIONS });
-  const [selectedOption, setSelectedOption] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const [formData, setFormData] = useState({});
+
   const handleFileChange = (file) => {
     setSelectedFile(file);
-  };
-
-  const handleUpload = () => {
-    console.log(selectedFile);
   };
 
   const handleGoBack = () => {
     router.back();
   };
 
-  const handleDropdown = (e) => {
-    const { name, value, label } = e.target;
-    console.log("here", { name, label, value });
-    setSelectedOption("changed");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -54,7 +53,7 @@ export default function AddViews({
           <h2 className="ml-2 text-xl font-medium">Add</h2>
         </div>
         <div className="p-4">
-          <form onSubmit={() => {}} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <TextInput
               handleChange={handleChange}
               name="title-indonesia"
