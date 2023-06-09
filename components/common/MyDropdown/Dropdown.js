@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Dropdown = ({ name, options, selectDefault, handleChange }) => {
   const optionDefault = options.find(
@@ -8,19 +8,26 @@ const Dropdown = ({ name, options, selectDefault, handleChange }) => {
   const [selectedOption, setSelectedOption] = useState(
     optionDefault ? optionDefault.value : ""
   );
+    
+  console.log(selectDefault, 'selectDefault');
+  console.log(optionDefault, 'optionDefault');
+  console.log(selectedOption, 'selectedOption');
+  useEffect(() => {
+    setSelectedOption(optionDefault)
+  }, [selectDefault, optionDefault])
 
   const handleDropdownChange = (e) => {
     setSelectedOption(e.target.value);
     handleChange(name, options.find(
       (option) => option.value === e.target.value
-    ).label);
+    ).value);
   };
 
   return (
     <div>
       <select
         id={name}
-        value={selectedOption}
+        value={selectedOption?.value}
         onChange={handleDropdownChange}
         className="w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mt-1"
       >

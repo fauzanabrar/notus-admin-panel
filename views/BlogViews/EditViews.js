@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import Editor from "components/common/Forms/Editor";
@@ -7,40 +7,99 @@ import Dropdown from "components/common/MyDropdown/Dropdown";
 import ImageUploader from "components/common/Forms/ImageUpload";
 import ImagePreview from "components/common/Forms/ImagePreview";
 import TagInput from "components/common/Forms/TagInput";
-import { BLOG_TBODY_MOCK } from "utils/mock-data";
+import BlogContext from "context/BlogContext";
+import ConfirmationModal from "components/common/ConfirmationModal/ConfirmationModal";
+import ToasterContext from "context/ToasterContext";
 
 const MOCK_DATA_OPTIONS = [
-  { id: 1, label: "Publikasikan", value: "1" },
-  { id: 2, label: "Simpan Sebagai Draft", value: "2" },
+  { id: 1, label: "Publikasikan", value: "Published" },
+  { id: 2, label: "Simpan Sebagai Draft", value: "Draft" },
 ];
 
-export default function EditViews({
-  isOpen,
-  onClose,
-  id,
-  handleChange = () => {},
-}) {
+export default function EditViews({ isOpen, onClose, id }) {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [formValues, setFormValues] = useState({ ...MOCK_DATA_OPTIONS });
-  const [selectedOption, setSelectedOption] = useState("");
-  const data = BLOG_TBODY_MOCK.find((blog) => blog.id === Number(id));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const context = useContext(BlogContext);
+  const toasterContext = useContext(ToasterContext);
+
+  const [formData, setFormData] = useState({});
 
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (file) => {
-    setSelectedFile(file);
+  useEffect(() => {
+    const contextData = context.data.find((blog) => blog.id === Number(id));
+    setFormData(contextData);
+  }, [context, id]);
+
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    // const elements = e.target.elements;
+
+    // const publishDate = elements.publishDate.defaultValue;
+
+    // const statusPublikasiElement = elements.statusPublikasi;
+    // const statusPublikasi = statusPublikasiElement.value;
+
+    // const penulis = elements.penulis.defaultValue;
+
+    const newData = {
+      ...formData,
+      // statusPublikasi,
+      id: Number(id),
+      // publishDate,
+      // penulis,
+    };
+    console.log(newData, 'newData');
+
+    const itemUpdate = context.data.findIndex((blog) => blog.id === Number(id));
+
+    if (itemUpdate !== -1) {
+      context.data[itemUpdate] = newData;
+      context.updateData(context.data);
+    }
+
+    const successToaster = {
+      showToaster: true,
+      toasterMessage: "Success mengubah data!",
+    };
+
+    toasterContext.updateData({
+      toaster: successToaster,
+      ...toasterContext,
+    });
+
+    router.push("/admin/blogs");
   };
 
+  const handleFileChange = (file) => {
+    setSelectedFile(file);
+    setFormData((prev) => ({ ...prev, gambar: URL.createObjectURL(file) }));
+  };
 
   const handleGoBack = () => {
     router.back();
   };
 
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <>
+      {isModalOpen && (
+        <div className="">
+          <ConfirmationModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onDelete={(e) => {
+              handleSubmit(e);
+            }}
+          />
+        </div>
+      )}
       <div className={cx("bg-white rounded shadow-lg relative  p-4")}>
         <div className="flex items-center justify-start p-4 border-b">
           <button onClick={handleGoBack}>
@@ -49,32 +108,55 @@ export default function EditViews({
           <h2 className="ml-2 text-xl font-medium">Edit</h2>
         </div>
         <div className="p-4">
-          <form onSubmit={() => {}} className="space-y-4">
-            <input type="hidden" value={data.id} />
-            <TextInput
-              handleChange={handleChange}
-              name="title-indonesia"
-              title="Judul Berita (Bahasa Indonesia)"
-              data={data.judul}
+          <form
+            onSubmit={(e) => {
+              setIsModalOpen(true);
+              e.preventDefault();
+            }}
+            className="space-y-4"
+          >
+            <input type="hidden" name="id" defaultValue={formData?.id} />
+            <input
+              type="hidden"
+              name="penulis"
+              defaultValue={formData?.penulis}
+            />
+            <input
+              type="hidden"
+              name="publishDate"
+              defaultValue={formData?.publishDate}
             />
             <TextInput
               handleChange={handleChange}
-              name="title-english"
+              name="judul"
+              title="Judul Berita (Bahasa Indonesia)"
+              data={formData?.judul}
+            />
+            <TextInput
+              handleChange={handleChange}
+              name="titleEnglish"
               title="Judul Berita (English)"
-              data={data.judul}
+              data={formData?.titleEnglish}
             />
             <div>
-              <TagInput name="kategori" title="Kategori" defaultTags={data.kategori} />
+              <TagInput
+                name="kategori"
+                title="Kategori"
+                defaultTags={formData?.kategori}
+                handleChange={handleChange}
+              />
             </div>
             <Editor
               title="Isi Berita (Bahasa Indonesia)"
-              name="body-indonesia"
-              data={data.isi}
+              name="isi"
+              data={formData?.isi}
+              handleChange={handleChange}
             />
             <Editor
               title="Isi Berita (English)"
-              name="body-english"
-              data={data.isi}
+              name="bodyEnglish"
+              data={formData?.bodyEnglish}
+              handleChange={handleChange}
             />
 
             <div>
@@ -82,14 +164,15 @@ export default function EditViews({
                 Status Publikasi
               </label>
               <Dropdown
-                name="status"
+                name="statusPublikasi"
                 options={MOCK_DATA_OPTIONS}
-                selectDefault={data.statusPublikasi}
+                selectDefault={formData?.statusPublikasi}
+                handleChange={handleChange}
               />
             </div>
             <ImageUploader
               title="Upload Gambar"
-              name="image"
+              name="gambar"
               onFileChange={handleFileChange}
             />
             <ImagePreview
@@ -98,7 +181,7 @@ export default function EditViews({
               imageUrl={
                 selectedFile
                   ? selectedFile && URL.createObjectURL(selectedFile)
-                  : data.gambar
+                  : formData?.gambar
               }
               imagePlaceholder={"/img/img-placeholder.png"}
             />

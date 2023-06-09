@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Add from "../MyActionButton/Add";
 import { Search } from "../Search";
 import Pagination from "../Pagination/Pagination";
 import { DeleteModals } from "../DeleteModals";
-import BlogContext from "context/BlogContext";
 
 export default function MyTable({
   color,
@@ -17,22 +15,20 @@ export default function MyTable({
   handleDelete = () => {},
   handleAdd = () => {},
 }) {
-  const router = useRouter();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectedItem, setselectedItem] = useState("");
   const [activePage, setActivePage] = useState(1);
-  const body = tbody;
-  const [tableData, setTableData] = useState(body);
+
+  const [tableData, setTableData] = useState(tbody);
 
   const paginationRef = useRef();
 
-  const itemsPerPage = 1;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     setTableData(tbody);
-  }, [BlogContext, tbody]);
+  }, [tbody]);
 
   useEffect(() => {
     if (paginationRef.current) {
@@ -68,40 +64,43 @@ export default function MyTable({
   useEffect(() => {
     // Mencari di seluruh tableData berdasarkan searchValue
     const filteredData = tbody.filter((data) =>
-      data.judul ? data.judul.toLowerCase().includes(searchValue.toLowerCase()) : (true)
+      data.judul
+        ? data.judul.toLowerCase().includes(searchValue.toLowerCase())
+        : true
     );
 
     // Menetapkan hasil pencarian ke tableData
     setTableData(filteredData);
+
     // Mengatur halaman saat ini kembali ke halaman pertama setelah pencarian
     setActivePage(1);
 
-    
     if (searchValue === "") {
       setTableData(tbody);
       return;
     }
-  }, [searchValue])
-
+  }, [searchValue, tbody]);
 
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedTbody = tableData ? tableData.slice(startIndex, endIndex): [];
+  const displayedTbody = tableData ? tableData.slice(startIndex, endIndex) : [];
 
   return (
     <>
       {isModalOpen && (
-        <DeleteModals
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onDelete={() => {
-            const updatedTbody = tableData.filter(
-              (data) => data.id !== selectedItem
-            );
-            setTableData(updatedTbody);
-            handleDelete(selectedItem);
-          }}
-        />
+        <div className="">
+          <DeleteModals
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onDelete={() => {
+              const updatedTbody = tableData.filter(
+                (data) => data.id !== selectedItem
+              );
+              setTableData(updatedTbody);
+              handleDelete(selectedItem);
+            }}
+          />
+        </div>
       )}
       <div
         className={
@@ -144,8 +143,8 @@ export default function MyTable({
                   Gambar
                 </th>
                 <th
-                  style={{ width: "auto" }}
-                  className="align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0  font-semibold bg-blueGray-600 text-blueGray-200 border-blueGray-500"
+                  // style={{ width: "auto" }}
+                  className="align-middle w-auto text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0  font-semibold bg-blueGray-600 text-blueGray-200 border-blueGray-500"
                 >
                   Judul
                 </th>
@@ -179,7 +178,7 @@ export default function MyTable({
               {displayedTbody?.length > 0 ? (
                 displayedTbody?.map((data, index) => {
                   return (
-                    <tr className="hover:bg-blueGray-300">
+                    <tr className="hover:bg-blueGray-300" key={index}>
                       <td className="border-t-0 text-center align-middle border-l-0 border-r-0 text-xs p-4 ">
                         {index + 1}
                       </td>
@@ -270,7 +269,9 @@ export default function MyTable({
         >
           <Pagination
             activePage={activePage}
-            totalPages={Math.ceil(tableData? (tableData.length / itemsPerPage): 1)}
+            totalPages={Math.ceil(
+              tableData ? tableData.length / itemsPerPage : 1
+            )}
             onClick={handlePageChange}
             onNextClick={onNextClick}
             onPreviousClick={onPreviousClick}

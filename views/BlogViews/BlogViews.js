@@ -3,30 +3,63 @@ import Admin from "layouts/Admin.js";
 import { MyTable } from "components/common/MyTable";
 import { useRouter } from "next/router";
 import BlogContext from "context/BlogContext";
+import Toaster from "components/common/Toaster/Toaster";
+import ToasterContext from "context/ToasterContext";
 
 const BlogViews = () => {
   const router = useRouter();
 
   const context = useContext(BlogContext);
   const [tableData, setTableData] = useState(context.data);
-  
+  const toasterContext = useContext(ToasterContext);
+  const [showToaster, setShowToaster] = useState(
+    toasterContext.data.toaster.showToaster
+  );
+  const [toasterMessage, setToasterMessage] = useState(
+    toasterContext.data.toaster.toasterMessage
+  );
+
   useEffect(() => {
     const newData = context.data;
     setTableData(newData);
-    console.log(context.data, 'context blogviews');
-    console.log(tableData, 'tableData blogviews');
   }, [context, tableData]);
 
+  useEffect(() => {
+    if (showToaster) {
+      const timeout = setTimeout(() => {
+        setShowToaster(false);
+        setToasterMessage("");
+        toasterContext.updateData({
+          toaster: {},
+        });
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [showToaster, toasterContext]);
 
   const handleDelete = (id) => {
     const newData = context.data.filter((item) => item.id !== id);
     context.updateData(newData);
     setTableData(context.data);
+
+    const successToaster = {
+      showToaster: true,
+      toasterMessage: "Success menghapus data!",
+    };
+
+    toasterContext.updateData({
+      toaster: successToaster,
+      ...toasterContext,
+    });
+
+    setShowToaster(successToaster.showToaster);
+    setToasterMessage(successToaster.toasterMessage);
   };
-  
 
   return (
     <>
+      {showToaster && <Toaster message={toasterMessage} status={"success"} />}
       <MyTable
         titleTable="Blogs Table"
         tbody={tableData}
@@ -42,4 +75,3 @@ const BlogViews = () => {
 BlogViews.layout = Admin;
 
 export default BlogViews;
-

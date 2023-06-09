@@ -29,9 +29,9 @@ const Modals = ({ isOpen, onClose, title, children, size = 'small' }) => {
         <div className={cx('fixed inset-0 flex items-center justify-center z-50', styles.modals__container)}>
           <div className={cx('fixed inset-0 bg-black opacity-50', styles.modals__background)} />
           <div 
-            className={cx('bg-white rounded shadow-lg relative w-full mx-4', {
+            className={cx('bg-white rounded shadow-lg relative w-3/4 mx-4', {
               'md:w-1/4': size === 'small',
-              'md:w-1/2': size === 'medium',
+              'md:w-1/2 lg:w-1/3': size === 'medium',
               'md:w-10/12': size === 'large',
             })}
             ref={modalRef}

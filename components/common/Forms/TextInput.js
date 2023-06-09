@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-export default function TextInput({ title, handleChange, placeholder = title, name, data, isRequired }) {
+export default function TextInput({ title, handleChange, placeholder = title, name, data = '', isRequired }) {
 
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     handleChange(name, value);

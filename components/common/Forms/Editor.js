@@ -9,6 +9,10 @@ export default function Editor({title, name, data = "", handleChange}) {
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
+
+  useEffect(() => {
+    setText(data)
+  }, [data]);
     
 
   const handleInputChange = (event) => {

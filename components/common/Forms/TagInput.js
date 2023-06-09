@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const MOCK_SUGGESSTIONS = [
   "Java",
@@ -10,10 +10,14 @@ const MOCK_SUGGESSTIONS = [
   "Laravel",
 ];
 
-const TagInput = ({ name, title, defaultTags = [], handleChange }) => {
-  const [tags, setTags] = useState(defaultTags);
+const TagInput = ({ name, title, defaultTags = "empty", handleChange }) => {
+  const [tags, setTags] = useState(defaultTags === "empty" ? [] : defaultTags);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState(MOCK_SUGGESSTIONS);
+
+  useEffect(() => {
+    setTags(defaultTags === "empty" ? [] : defaultTags);
+  }, [defaultTags]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -40,7 +44,7 @@ const TagInput = ({ name, title, defaultTags = [], handleChange }) => {
   const handleSuggestionClick = (suggestion) => {
     if (!tags.includes(suggestion)) {
       setTags([...tags, suggestion]);
-      handleChange(name, [...tags, suggestion]); 
+      handleChange(name, [...tags, suggestion]);
     }
     setInputValue("");
   };
@@ -51,13 +55,18 @@ const TagInput = ({ name, title, defaultTags = [], handleChange }) => {
         <label htmlFor={name} className="block font-medium mb-2">
           {title}
         </label>
-        <div className="flex flex-row items-center border border-gray-300 rounded w-full py-3 px-2">
+        <div className="flex flex-row flex-wrap items-center border border-gray-300 rounded w-full py-3 px-4">
           {tags.map((tag) => (
             <div
               key={tag}
-              className="flex items-center px-3 py-1 text-sm mr-1 bg-gray-300  rounded-full"
+              className="flex items-center px-3 py-1 text-sm mr-1 mb-2 bg-gray-300 rounded-full"
             >
-              <span className="mr-1">{tag}</span>
+              {tag.length > 100 ? (
+                <span className="mr-1 inline">{tag}</span>
+              ) : (
+                <span className="mr-1 whitespace-normal">{tag}</span>
+              )}
+
               <button
                 type="button"
                 className="text-red-500"
@@ -71,7 +80,7 @@ const TagInput = ({ name, title, defaultTags = [], handleChange }) => {
             <input
               type="text"
               id="tags"
-              className=" h-8 w-full rounded mr-2 ml-1"
+              className=" h-8 w-full rounded mr-4 "
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}

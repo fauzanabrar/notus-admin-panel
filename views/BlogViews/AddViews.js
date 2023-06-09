@@ -8,6 +8,7 @@ import ImageUploader from "components/common/Forms/ImageUpload";
 import ImagePreview from "components/common/Forms/ImagePreview";
 import TagInput from "components/common/Forms/TagInput";
 import BlogContext from "context/BlogContext";
+import ToasterContext from "context/ToasterContext";
 
 const MOCK_DATA_OPTIONS = [
   { id: 1, label: "Publikasikan", value: "Published" },
@@ -21,10 +22,12 @@ export default function AddViews({ data = {} }) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const context = useContext(BlogContext);
+  const toasterContext = useContext(ToasterContext);
 
   const [formData, setFormData] = useState({});
 
   useEffect(() => {}, []);
+  useEffect(() => {}, [context]);
 
   const handleFileChange = (file, name) => {
     setSelectedFile(file);
@@ -39,7 +42,7 @@ export default function AddViews({ data = {} }) {
     e.preventDefault();
     const elements = e.target.elements;
 
-    const id = Number(elements.idData.defaultValue);
+    const id = Number(elements.id.defaultValue);
 
     const publishDate = new Date().toLocaleDateString().replaceAll("/", "-");
 
@@ -58,6 +61,16 @@ export default function AddViews({ data = {} }) {
 
     const updatedData = [...context.data, newData];
     context.updateData(updatedData);
+
+    const successToaster = {
+      showToaster: true,
+      toasterMessage: 'Success menambahkan data baru!',
+    }
+
+    toasterContext.updateData({
+      toaster: successToaster,
+      ...toasterContext,
+    })
 
     router.push("/admin/blogs");
   };
@@ -79,19 +92,21 @@ export default function AddViews({ data = {} }) {
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="hidden"
-              name="idData"
+              name="id"
               defaultValue={context.data.length + 1}
             />
             <input type="hidden" name="penulis" defaultValue={"Admin"} />
             <TextInput
               handleChange={handleChange}
+              data={formData.judul}
               name="judul"
               title="Judul Berita (Bahasa Indonesia)"
               isRequired={true}
             />
             <TextInput
               handleChange={handleChange}
-              name="title-english"
+              data={formData.titleEnglish}
+              name="titleEnglish"
               title="Judul Berita (English)"
             />
             <div>
@@ -108,7 +123,7 @@ export default function AddViews({ data = {} }) {
             />
             <Editor
               title="Isi Berita (English)"
-              name="body-english"
+              name="bodyEnglish"
               handleChange={handleChange}
             />
 
