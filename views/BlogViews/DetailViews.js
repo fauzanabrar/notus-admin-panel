@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
+
 import BlogContext from "context/BlogContext";
 
 export default function DetailViews({ id }) {
@@ -19,7 +20,7 @@ export default function DetailViews({ id }) {
   
   useEffect(() => {
     setData(context.data.find((item) => item.id === Number(id)));
-  }, [data]);
+  }, [data, id, context.data]);
 
   return (
     <>

@@ -11,7 +11,7 @@ const Table = ({ handleDetails, handleEdit, handleDelete, THEAD_VALUE, TBODY_VAL
               return (
                 <th
                   key={i}
-                  className="text-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-600 text-blueGray-200 border-blueGray-500"
+                  className="text-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold  bg-blueGray-600 text-blueGray-200 border-blueGray-500"
                 >
                   {value}
                 </th>
@@ -19,7 +19,7 @@ const Table = ({ handleDetails, handleEdit, handleDelete, THEAD_VALUE, TBODY_VAL
             })}
             {(handleDetails || handleEdit || handleDelete) && (
               <th
-                className="text-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-600 text-blueGray-200 border-blueGray-500"
+                className="text-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold  bg-blueGray-600 text-blueGray-200 border-blueGray-500"
               />
             )}
           </tr>

@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
-import Editor from "components/common/Forms/Editor";
-import TextInput from "components/common/Forms/TextInput";
-import Dropdown from "components/common/MyDropdown/Dropdown";
-import ImageUploader from "components/common/Forms/ImageUpload";
-import ImagePreview from "components/common/Forms/ImagePreview";
-import TagInput from "components/common/Forms/TagInput";
+
+import Editor from "components/common/Blogs/Forms/Editor";
+import TextInput from "components/common/Blogs/Forms/TextInput";
+import Dropdown from "components/common/Blogs/Forms/Dropdown";
+import ImageUploader from "components/common/Blogs/Forms/ImageUpload";
+import ImagePreview from "components/common/Blogs/Forms/ImagePreview";
+import TagInput from "components/common/Blogs/Forms/TagInput";
+
 import BlogContext from "context/BlogContext";
-import ConfirmationModal from "components/common/ConfirmationModal/ConfirmationModal";
 import ToasterContext from "context/ToasterContext";
+
+import ConfirmationModal from "components/common/Blogs/Modals/ConfirmationModal";
 
 const MOCK_DATA_OPTIONS = [
   { id: 1, label: "Publikasikan", value: "Published" },
@@ -52,7 +55,6 @@ export default function EditViews({ isOpen, onClose, id }) {
       // publishDate,
       // penulis,
     };
-    console.log(newData, 'newData');
 
     const itemUpdate = context.data.findIndex((blog) => blog.id === Number(id));
 

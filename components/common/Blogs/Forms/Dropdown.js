@@ -9,9 +9,6 @@ const Dropdown = ({ name, options, selectDefault, handleChange }) => {
     optionDefault ? optionDefault.value : ""
   );
     
-  console.log(selectDefault, 'selectDefault');
-  console.log(optionDefault, 'optionDefault');
-  console.log(selectedOption, 'selectedOption');
   useEffect(() => {
     setSelectedOption(optionDefault)
   }, [selectDefault, optionDefault])

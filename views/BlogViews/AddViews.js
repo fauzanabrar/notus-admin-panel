@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
-import Editor from "components/common/Forms/Editor";
-import TextInput from "components/common/Forms/TextInput";
-import Dropdown from "components/common/MyDropdown/Dropdown";
-import ImageUploader from "components/common/Forms/ImageUpload";
-import ImagePreview from "components/common/Forms/ImagePreview";
-import TagInput from "components/common/Forms/TagInput";
+
+import Editor from "components/common/Blogs/Forms/Editor";
+import TextInput from "components/common/Blogs/Forms/TextInput";
+import Dropdown from "components/common/Blogs/Forms/Dropdown";
+import ImageUploader from "components/common/Blogs/Forms/ImageUpload";
+import ImagePreview from "components/common/Blogs/Forms/ImagePreview";
+import TagInput from "components/common/Blogs/Forms/TagInput";
+
 import BlogContext from "context/BlogContext";
 import ToasterContext from "context/ToasterContext";
 

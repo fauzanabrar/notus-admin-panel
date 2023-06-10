@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import Add from "../MyActionButton/Add";
+
+import Add from "../ActionButton/Add";
 import { Search } from "../Search";
 import Pagination from "../Pagination/Pagination";
-import { DeleteModals } from "../DeleteModals";
+import DeleteModal from "../Modals/DeleteModals";
 
 export default function MyTable({
   color,
@@ -89,7 +90,7 @@ export default function MyTable({
     <>
       {isModalOpen && (
         <div className="">
-          <DeleteModals
+          <DeleteModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onDelete={() => {

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import Admin from "layouts/Admin.js";
-import { MyTable } from "components/common/MyTable";
 import { useRouter } from "next/router";
+import Admin from "layouts/Admin.js";
+
 import BlogContext from "context/BlogContext";
-import Toaster from "components/common/Toaster/Toaster";
 import ToasterContext from "context/ToasterContext";
+
+import Toaster from "components/common/Blogs/Toaster/Toaster";
+import { MyTable } from "components/common/Blogs/MyTable";
 
 const BlogViews = () => {
   const router = useRouter();
