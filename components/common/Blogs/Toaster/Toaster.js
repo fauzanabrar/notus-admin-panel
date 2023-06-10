@@ -7,7 +7,7 @@ export default function Toaster({ message, status }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -24,6 +24,7 @@ export default function Toaster({ message, status }) {
           {
             "bg-green-300": status === "success",
             "bg-red-300": status === "error",
+            "bg-blue-300": status === "info",
           }
         )}
       >
