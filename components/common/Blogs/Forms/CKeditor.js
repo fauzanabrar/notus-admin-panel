@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 
-export default function CKeditor({ onChange, name, value }) {
+export default function CKeditor({ onChange, name, editorLoaded, value }) {
   const editorRef = useRef();
-  const [editorLoaded, setEditorLoaded] = useState();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
 
   useEffect(() => {
@@ -11,7 +10,6 @@ export default function CKeditor({ onChange, name, value }) {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
-    setEditorLoaded(true);
   }, []);
 
 
