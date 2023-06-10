@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CKeditor from "./CKeditor.js";
+import CKeditor from "./CKeditor.tsx";
 
 
 export default function Editor({title, name, data = "", handleChange}) {
