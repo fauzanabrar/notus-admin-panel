@@ -10,6 +10,14 @@ export default function CKeditor({ onChange, name, editorLoaded, value }) {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
+    const editorInstance = editorRef.current;
+    return () => {
+      if (editorInstance) {
+        editorInstance.destroy().then(() => {
+          console.log("Editor destroyed");
+        });
+      }
+    };
   }, []);
 
 
