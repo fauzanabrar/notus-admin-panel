@@ -7,23 +7,43 @@ import { Search } from "../Search";
 import Pagination from "../Pagination/Pagination";
 import DeleteModal from "../Modals/DeleteModals";
 
-export default function MyTable({
-  color,
+interface MyTableProps {
+  color?: "light" | "dark";
+  titleTable: string;
+  tbody: any[];
+  handleDetails?: (id: number) => void;
+  handleEdit?: (id: number) => void;
+  handleDelete?: (id: number) => void;
+  handleAdd?: () => void;
+}
+
+interface BlogData {
+  id: number;
+  gambar: string;
+  judul: string;
+  isi: string;
+  penulis: string;
+  publishDate: string;
+  statusPublikasi: string;
+}
+
+const MyTable: React.FC<MyTableProps> = ({
+  color = "light",
   titleTable,
   tbody,
   handleDetails = () => {},
   handleEdit = () => {},
   handleDelete = () => {},
   handleAdd = () => {},
-}) {
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectedItem, setselectedItem] = useState("");
   const [activePage, setActivePage] = useState(1);
 
-  const [tableData, setTableData] = useState(tbody);
+  const [tableData, setTableData] = useState<BlogData[]>(tbody);
 
-  const paginationRef = useRef();
+  const paginationRef = useRef<HTMLDivElement>(null);
 
   const itemsPerPage = 5;
 
@@ -37,27 +57,27 @@ export default function MyTable({
     }
   }, [activePage]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setActivePage(page);
-    paginationRef.current.scrollIntoView({ behavior: "smooth" });
+    paginationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const onNextClick = () => {
     setActivePage((prevPage) => prevPage + 1);
-    paginationRef.current.scrollIntoView({ behavior: "smooth" });
+    paginationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const onPreviousClick = () => {
     setActivePage((prevPage) => prevPage - 1);
-    paginationRef.current.scrollIntoView({ behavior: "smooth" });
+    paginationRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const onDelete = (id) => {
+  const onDelete = (id: number) => {
     setIsModalOpen(true);
-    setselectedItem(id);
+    setselectedItem(String(id));
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchInput = e.target.value;
     setSearchValue(searchInput);
   };
@@ -95,10 +115,10 @@ export default function MyTable({
             onClose={() => setIsModalOpen(false)}
             onDelete={() => {
               const updatedTbody = tableData.filter(
-                (data) => data.id !== selectedItem
+                (data) => data.id !== Number(selectedItem)
               );
               setTableData(updatedTbody);
-              handleDelete(selectedItem);
+              handleDelete(Number(selectedItem));
             }}
           />
         </div>
@@ -290,3 +310,5 @@ MyTable.defaultProps = {
 MyTable.propTypes = {
   color: PropTypes.oneOf(["light", "dark"]),
 };
+
+export default MyTable;

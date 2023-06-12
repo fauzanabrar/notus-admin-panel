@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter, NextRouter } from "next/router";
 import Admin from "layouts/Admin.js";
 
 import BlogContext from "context/BlogContext";
@@ -8,16 +8,44 @@ import ToasterContext from "context/ToasterContext";
 import Toaster from "components/common/Blogs/Toaster/Toaster";
 import { MyTable } from "components/common/Blogs/MyTable";
 
-const BlogViews = () => {
-  const router = useRouter();
 
-  const context = useContext(BlogContext);
-  const [tableData, setTableData] = useState(context.data);
-  const toasterContext = useContext(ToasterContext);
-  const [showToaster, setShowToaster] = useState(
+interface BlogData {
+  id: number;
+  gambar: string;
+  judul: string;
+  isi: string;
+  penulis: string;
+  publishDate: string;
+  statusPublikasi: string;
+}
+
+interface BlogContextProps {
+  data: BlogData[];
+  updateData: (newData: BlogData[]) => void;
+}
+
+interface ToasterData {
+  showToaster: boolean;
+  toasterMessage: string;
+}
+
+interface ToasterContextData {
+  data: {
+    toaster: ToasterData;
+  };
+  updateData: (data: any) => void;
+}
+
+const BlogViews: React.FC = () => {
+  const router: NextRouter = useRouter();
+
+  const context = useContext<BlogContextProps>(BlogContext);
+  const [tableData, setTableData] = useState<BlogData[]>(context.data);
+  const toasterContext = useContext<ToasterContextData>(ToasterContext);
+  const [showToaster, setShowToaster] = useState<boolean>(
     toasterContext.data.toaster.showToaster
   );
-  const [toasterMessage, setToasterMessage] = useState(
+  const [toasterMessage, setToasterMessage] = useState<string>(
     toasterContext.data.toaster.toasterMessage
   );
 
@@ -40,10 +68,10 @@ const BlogViews = () => {
     }
   }, [showToaster, toasterContext]);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     const newData = context.data.filter((item) => item.id !== id);
     context.updateData(newData);
-    setTableData(context.data);
+    setTableData(newData);
 
     const successToaster = {
       showToaster: true,
